@@ -1,0 +1,15 @@
+#!/bin/bash
+product=$1
+dest=${2:-~/bin}
+products=(consul terraform)
+[[ " ${products[@]} " =~ " ${product} " ]] || { echo "Unknown product [${product}]. Only [${products[@]}] were tested."; exit 1; }
+if [ $product == terraform ]; then
+  latest_tag=$(curl -s https://api.github.com/repos/hashicorp/$product/releases/latest | jq -r '.tag_name')
+  latest_version=${latest_tag:1}
+fi
+if [ $product == consul ]; then
+  latest_version=$(curl -s https://www.consul.io/downloads.html| grep -Po '(?<=blob/v).*(?=/CHANGELOG.md)')
+fi
+curl -o /tmp/${product}_latest.zip https://releases.hashicorp.com/${product}/${latest_version}/${product}_${latest_version}_linux_amd64.zip
+unzip -p /tmp/${product}_latest.zip > ${dest}/${product} && rm -f /tmp/${product}_latest.zip
+chmod 755 ${dest}/${product}
