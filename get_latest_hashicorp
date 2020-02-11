@@ -1,8 +1,11 @@
 #!/bin/bash
 product=$1
 dest=${2:-~/bin}
-products=(consul terraform)
+products=(vault consul terraform)
 [[ " ${products[@]} " =~ " ${product} " ]] || { echo "Unknown product [${product}]. Only [${products[@]}] were tested."; exit 1; }
+if [ $product == vault ]; then
+  latest_version=$(curl -s https://api.github.com/repos/hashicorp/vault/tags | jq -r '.[]|.name' | grep -Po '(?<=v)([0-9.]+)' | sort | uniq | sort --version-sort|tail -n1)
+fi
 if [ $product == terraform ]; then
   latest_tag=$(curl -s https://api.github.com/repos/hashicorp/$product/releases/latest | jq -r '.tag_name')
   latest_version=${latest_tag:1}
