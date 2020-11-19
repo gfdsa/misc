@@ -10,6 +10,7 @@ pages:
   stage: deploy
   script:
     - mkdocs build -f gitlab-mkdocs.yml
+    - "echo 'google-site-verification: googled0d984173a2855fc.html' > public/googled0d984173a2855fc.html"
   artifacts:
     paths:
       - public
