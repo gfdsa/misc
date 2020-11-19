@@ -1,0 +1,5 @@
+site_name: misc
+docs_dir: docs
+site_dir: public
+repo_url: https://gitlab.com/tabolskym/misc
+repo_name: gfdsa/misc

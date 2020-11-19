@@ -1,10 +1,15 @@
 image: python:3.8-buster
 before_script:
   - mkdir public
+  - mkdir docs
+  - cp README.md docs/
+  - pip install mkdocs
+
+
 pages:
   stage: deploy
   script:
-    - cp README.md public/
+    - mkdocs build -f gitlab-mkdocs.yml
   artifacts:
     paths:
       - public
