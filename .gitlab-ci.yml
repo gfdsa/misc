@@ -1,0 +1,12 @@
+image: python:3.8-buster
+before_script:
+  - mkdir public
+pages:
+  stage: deploy
+  script:
+    - cp README.md public/
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
