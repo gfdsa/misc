@@ -1,0 +1,16 @@
+#!/bin/bash
+PASS=~/keys/snxpass
+SNX=snx
+SNXRC=~/.snxrc
+if [ x"$1" == "xconnect" ]; then
+    p=`cat $PASS`;
+    sudo $SNX -d && {
+        echo -ne $p'\ny\n' | sudo $SNX -f $SNXRC
+    };
+else
+    if [ x"$1" == "xdisconnect" ]; then
+        sudo $SNXRC -d;
+    else
+        echo connect or disconnect;
+    fi;
+fi
