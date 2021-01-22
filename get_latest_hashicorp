@@ -11,7 +11,7 @@ if [ $product == terraform ] || [ $product == packer ] ; then
   latest_version=${latest_tag:1}
 fi
 if [ $product == consul ]; then
-  latest_version=$(curl -s https://www.consul.io/downloads.html| grep -Po '(?<=blob/v).*(?=/CHANGELOG.md)')
+  latest_version=$(curl -sL https://www.consul.io/downloads| grep -Po '(?<=blob/v).*(?=/CHANGELOG.md)')
 fi
 curl -o /tmp/${product}_latest.zip https://releases.hashicorp.com/${product}/${latest_version}/${product}_${latest_version}_linux_amd64.zip
 unzip -p /tmp/${product}_latest.zip > ${dest}/${product} && rm -f /tmp/${product}_latest.zip
